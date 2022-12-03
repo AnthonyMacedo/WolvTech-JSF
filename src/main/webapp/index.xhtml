@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		
+		<div class="page-title">
+			<h1>Bem Vindo.</h1>
+		</div>		
+				<div id="data_index">	
+					<h:form>
+				Hoje é <p:outputLabel value="#{loginBean.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+						</p:outputLabel>
+					</h:form>
+				</div>		
+			
+		
+	</ui:define>
+
+
+</ui:composition>

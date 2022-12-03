@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Blu Tech</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body class="login-page">
+
+	<div class="login-box">
+
+		<div class="login-logo">
+			<a>Blu Tech</a>
+		</div>
+
+		<div class="login-card ui-fluid">
+
+			<h:form>
+				<p class="login-box-msg">Faça login para entrar.</p>
+
+					<p:panelGrid columns="1" layout="grid" styleClass="noBorder">
+		
+					<p:messages id="msg" showDetail="false" closable="true" />
+
+						<p:inputText value="#{loginBean.usuario}" id="usuario"
+							pt:placeholder="Usuário" required="true" autocomplete="false"
+							requiredMessage="Informe o usuário." styleClass="ui-inputLogin"
+							style="margin-top: 5px;" />
+
+						<p:password value="#{loginBean.senha}" id="senha"
+							pt:placeholder="Senha" required="true"
+							requiredMessage="Informe a senha." styleClass="ui-inputLogin"
+							style="margin-top: 5px;" />
+
+						<p:commandButton value="Entrar" styleClass="ui-azul noBorder"
+							actionListener="#{loginBean.autentica}"
+							style="margin-top: 5px" ajax="false" />
+
+					</p:panelGrid>
+					
+			</h:form>
+
+		</div>
+		<!-- Login Page -->
+
+	</div>
+	<!-- Login Box -->
+</h:body>
+</html>

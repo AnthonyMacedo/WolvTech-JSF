@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<div class="card crud-demo" id="tabelaPrimefaces">
+
+			<div class="page-title">
+				<h1>Lista de Clientes</h1>
+			</div>
+
+			<p:messages > 
+				<p:autoUpdate disabled="false" />
+			</p:messages>
+
+			<h:form acceptcharset="UTF-8" style=" text-align: center;">
+
+				<p:toolbar style="padding: 5px;">
+					<p:toolbarGroup>
+						<p:inputText id="pesquisar" placeholder="Digite aqui..."
+							value="#{clienteBean.termoPesquisa}" />
+
+						<p:commandButton for="pesquisar" value="Pesquisar"
+							icon="pi pi-search" actionListener="#{clienteBean.pesquisar}"
+							update="dtClientes" />
+					</p:toolbarGroup>
+
+					<p:toolbarGroup>
+						<p:commandButton id="novo" value="Novo" icon="pi pi-plus" action="cliente?faces-redirect=true" />
+
+						<span class="ui-icon ui-icon-grip-dotted-vertical" />
+
+						<p:commandButton id="editar" icon="pi pi-pencil" title="Editar" />
+
+						<p:commandButton id="excluir" icon="pi pi-trash" title="Excluir" />
+					</p:toolbarGroup>
+				</p:toolbar>
+
+				<p:growl id="growl" showDetail="true" />
+
+				<p:dataTable id="dtClientes" widgetVar="dtClientes" var="cliente"
+					value="#{clienteBean.listaClientes}" reflow="true"
+					styleClass="products-table" rowKey="#{cliente.id}" paginator="true"
+					rows="10" style="font-size: 1rem; margin-top: 15px"
+					paginatorPosition="bottom">
+					<p:growl id="growl" showDetail="false" />
+
+					<f:facet name="header">
+						<p:outputLabel value="Clientes" />
+					</f:facet>
+
+					<p:column headerText="Id" style="width: 5%" sortBy="#{cliente.id}">
+						<h:outputText value="#{cliente.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" sortBy="#{cliente.nome}">
+						<h:outputText value="#{cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF" sortBy="#{cliente.cpf}">
+						<h:outputText value="#{cliente.cpf}" />
+					</p:column>
+
+					<p:column headerText="Email" sortBy="#{cliente.email}">
+						<h:outputText value="#{cliente.email}" />
+					</p:column>
+
+					<p:column headerText="Data Nascimento"
+						sortBy="#{cliente.dataNascimento}">
+						<h:outputText value="#{cliente.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column exportable="false">
+
+						<p:commandButton style="font-size: 1rem" icon="pi pi-pencil"
+							action="#{clienteBean.preparaAlteracao}">
+							<f:setPropertyActionListener value="#{cliente}"
+								target="#{clienteBean.cliente}" />
+
+						</p:commandButton>
+
+						<p:commandButton style="font-size: 1rem" icon="pi pi-trash"
+							action="#{clienteBean.remove}" update="@form, growl">
+							<f:ajax event="click" update=":form:growl" />
+							<f:setPropertyActionListener value="#{cliente}"
+								target="#{clienteBean.cliente}" />
+							<p:confirm header="Confirmação"
+								message="Deseja excluir este registro?" icon="pi pi-info-circle" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							responsive="true" width="350">
+							<p:commandButton value="Não" type="button"
+								styleClass="ui-confirmdialog-no ui-button-flat" />
+							<p:commandButton value="Sim" type="button"
+								styleClass="ui-confirmdialog-yes" />
+						</p:confirmDialog>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

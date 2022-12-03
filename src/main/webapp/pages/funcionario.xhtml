@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<div class="page-title">
+			<h1>Cadastro de Funcionário</h1>
+		</div>
+
+		<h:form acceptcharset="UTF-8">
+
+			<p:toolbar style="padding: 5px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="funcionario" icon="pi pi-plus" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" href="#" icon="pi pi-search"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<div class="ui-fluid">
+			<p:messages id="msg" showDetail="false"  closable="true"/>
+			
+				<p:tabView style="margin-top: 15px">
+
+					<p:tab title="Dados básicos">
+
+						<p:inputText id="idFuncionario" type="hidden"
+							value="#{funcionarioBean.funcionario.id}" />
+
+						<p:panelGrid columns="4" styleClass="noBorder" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+							<p:outputLabel for="nome" value="Nome" />
+							<p:inputText id="nome" label="Nome"
+								value="#{funcionarioBean.funcionario.nome}" />
+
+							<p:outputLabel for="email" value="Email" />
+							<p:inputText id="email" required="true"
+								value="#{funcionarioBean.funcionario.email}" />
+
+							<p:outputLabel for="cpf" value="CPF" />
+							<p:inputMask id="cpf" mask="999.999.999-99"
+								value="#{funcionarioBean.funcionario.cpf}" />
+
+							<p:outputLabel for="telefone" value="Telefone" />
+							<p:inputMask id="telefone" mask="(99) 99999-9999"
+								value="#{funcionarioBean.funcionario.telefone}" />
+
+							<p:outputLabel for="celular" value="Celular" />
+							<p:inputMask id="celular" mask="(99) 99999-9999"
+								value="#{funcionarioBean.funcionario.celular}" />
+
+							<p:outputLabel for="dataNascimento" value="Data Nascimento" />
+							<p:inputMask id="dataNascimento" mask="99/99/9999"
+								value="#{funcionarioBean.funcionario.dataNascimento}">
+								<f:convertDateTime for="dataNascimento" type="date"
+									pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-3" />
+							</p:inputMask>
+							
+							<p:outputLabel for="usuario" value="Usuário" />
+							<p:inputText id="usuario" style="width: 70%"
+								value="#{funcionarioBean.funcionario.usuario}" />
+
+							<p:outputLabel for="senha" value="Senha" />
+							<p:password id="senha" style="width: 70%" value="#{funcionarioBean.funcionario.senha}"/>
+							
+							<p:outputLabel for="sexo" value="Sexo">
+								<p:selectOneMenu id="sexo"
+									value="#{funcionarioBean.funcionario.sexo}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItem itemValue="M" itemLabel="Masculino" />
+									<f:selectItem itemValue="F" itemLabel="Feminino" />
+								</p:selectOneMenu>
+							</p:outputLabel>
+
+						</p:panelGrid>
+					</p:tab>
+					<!-- FIM TAB CLIENTE -->
+
+					<p:tab title="Endereço">
+
+						<p:panelGrid columns="4" styleClass="noBorder" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+							<p:outputLabel for="cep" value="CEP" />
+							<p:inputText id="cep"
+								value="#{funcionarioBean.funcionario.endereco.cep}">
+								<f:ajax event="blur" execute="@this"
+									listener="#{funcionarioBean.pesquisaCep}"
+									render="logradouro complemento municipio bairro estado" />
+							</p:inputText>
+
+							<p:outputLabel for="logradouro" value="Logradouro" />
+							<p:inputText id="logradouro"
+								value="#{funcionarioBean.funcionario.endereco.logradouro}" />
+
+							<p:outputLabel for="numero" value="Número" />
+							<p:inputText id="numero"
+								value="#{funcionarioBean.funcionario.endereco.numero}" />
+
+							<p:outputLabel for="complemento" value="Complemento" />
+							<p:inputText id="complemento"
+								value="#{funcionarioBean.funcionario.endereco.complemento}" />
+
+							<p:outputLabel for="municipio" value="Município" />
+							<p:inputText id="municipio"
+								value="#{funcionarioBean.funcionario.endereco.municipio}" />
+
+							<p:outputLabel for="bairro" value="Bairro" />
+							<p:inputText id="bairro"
+								value="#{funcionarioBean.funcionario.endereco.bairro}" />
+
+							<p:outputLabel for="estado" value="Estado" />
+							<p:inputText id="estado"
+								value="#{funcionarioBean.funcionario.endereco.uf}" />
+
+						</p:panelGrid>
+					</p:tab>
+					<!-- FIM TAB ENDEREÇO -->
+
+				</p:tabView>
+
+				<div class="ui-buttons">
+					<h:panelGroup>
+
+						<p:commandButton value="Salvar"
+							actionListener="#{funcionarioBean.salvar}" update="@form"
+							style="width: auto" />
+						<p:commandButton value="Limpar" action="#{funcionarioBean.limpar}"
+							immediate="true" style="width: auto" />
+
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,211 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+* {
+	margin: 0;
+}
+
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 11pt;
+	background-color: #fff;
+}
+
+/* LOGIN */
+.login-page {
+	/* Centralizar conteudo */
+	-webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; 
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    /**/
+    background-color: #e9ecef;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.login-box {
+	width: 360px;
+}
+
+.login-logo {
+    font-size: 2.1rem;
+    font-weight: bold;
+    margin-bottom: 0.9rem;
+    text-align: center;
+    
+    
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+     user-select: none; /* Standard syntax */
+}
+
+.login-card {
+    padding: 20px;
+	border-radius: 1px;
+	border-top: solid 4px #394a99;
+	box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+	background-color: #fff;	
+}
+
+.login-box-msg {
+	padding: 15px 0;
+	text-align: center;
+    font-size: 13pt;
+}
+
+/** MENU  - SUBMENU**/
+.nav-bar {
+	padding: 0;
+	list-style: none;
+}
+
+.nav-section {
+	min-height: 70px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.nav-bar-list-1, .nav-bar-list-2, .nav-bar-list-3 {
+	padding: 0;
+	list-style: none;
+}
+
+.nav-bar li {
+	padding-top: 5px;
+}
+
+.nav-bar a:hover {
+	background-color: #394a99;
+	color: #fff;
+}
+
+.nav-link {
+	color: #232323;
+	padding: 7px;
+	display: block;
+	position: relative;
+	text-decoration: none;
+	border-radius: 2px;
+}
+
+.nav-sub-link {
+	color: #232323;
+	padding: 7px;
+	display: block;
+	position: relative;
+	text-decoration: none;
+	border-radius: 2px;
+	padding-left: 35px;
+}
+
+.js-arrow {
+	float: right;
+}
+
+.js-hide {
+	display: none;
+}
+
+.nav-link.js-isActive:before {
+	content: "";
+	background-color: #394a99;
+	height: 100%;
+	width: 5px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.nav-sub-link.js-isActive:before {
+	content: "";
+	background-color: #394a99;
+	height: 100%;
+	width: 5px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+/** CONTEUDO **/
+.page-title {
+	padding: 20px 0;
+	margin: 0;
+	color: #373737;
+	font-size: 1em;
+}
+
+.ui-buttons {
+	width: auto;
+	padding-top: 10px;
+}
+
+/** ESTILOS P/ PRIMEFACES **/
+/* INPUTFIELD - LOGIN*/
+.ui-widget-content .ui-inputfield.ui-inputLogin {
+	padding: 10px;
+}
+/* BUTTON AZUL - LOGIN */
+.ui-button-text-only.ui-azul .ui-button-text{
+	background-color: #394a99;
+    color: #fff;
+    border-radius: 3px;
+    text-shadow: none;
+}
+.ui-button.noBorder{
+	border: none;
+}
+
+/** PANELGRID **/
+.ui-panelgrid.noBorder .ui-grid-responsive {
+	border: none;
+}
+/* TABVIEW */
+.ui-tabs .ui-tabs-nav.ui-widget-header li a {
+	color: black;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+	color: #006ad5;
+}
+
+@media ( max-width : 640px) { /* TABVIEW ALINHADO A BAIXO */
+	.ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+		width: 100%;
+	}
+	.ui-panelgrid.noBorder .ui-grid-responsive .ui-grid-row {
+		border: none;
+	}
+}
+
+/** SELECT ONEMENU **/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {
+	background-image: linear-gradient(to bottom, #3b51ba, #3b51ba);
+	background-color: #3b51ba;
+	background-color: #3b51ba;
+	background-position: 0px;
+	background-image: -moz-linear-gradient(top, #3b51ba, #3b51ba) !important;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3b51ba),
+		to(#3b51ba));
+	background-image: -webkit-linear-gradient(top, #3b51ba, #3b51ba);
+	background-image: -o-linear-gradient(top, #3b51ba, #3b51ba);
+}
+/* GROWL MSG*/
+.ui-growl {
+	top: 65px !important;
+}
+
+/** INPUTTEXT APARTAMENTO **/
+.ui-inputnumber .ui-fluid.ui-inputtext {
+	width: 45% !important;
+}
+
+/** BOTAO DE BUSCA - lupa **/
+.ui-fluid .ui-button.ui-width	 {
+	width: 35px !important;
+}

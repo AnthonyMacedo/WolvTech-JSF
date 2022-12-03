@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="content">
+		<h:head>
+			<h:outputScript library="javascript" name="data_ptbr_script.js"></h:outputScript>
+		</h:head>
+
+		<div class="page-title">
+			<h1>Reservas</h1>
+		</div>
+
+		<h:form>
+
+			<p:growl id="growl" showDetail="false" />
+
+			<p:fieldset style="border-radius: 10px; border-color: #75a7fb;">
+				<div class="ui-fluid">
+					<p:panelGrid columns="2" styleClass="noBorder"
+						columnClasses="ui-grid-col-2, ui-grid-col-4" layout="grid">
+
+
+						<p:outputLabel value="Cliente " for="cliente" />
+						<p:column>
+
+							<p:inputText readonly="true" id="cliente" style="width: 80%"
+								value="#{reservasBean.reserva.cliente.nome}" required="true" />
+
+							<p:commandButton id="buscarClienteBtn" type="button"
+								styleClass="ui-width" title="Buscar Cliente" icon="pi pi-search" />
+
+							<p:overlayPanel for="buscarClienteBtn" 
+								style="width: 45%" widgetVar="clientePicker">
+
+								<p:dataTable id="dtCliente" var="cliente"
+									value="#{clienteBean.listaClientes}" reflow="true"
+									selection="#{clienteBean.clienteSelecionado}"
+									selectionMode="single" rows="5" paginator="true"
+									paginatorPosition="bottom" rowKey="#{cliente.id}"
+									style="text-align: center">
+
+									<p:ajax event="rowSelect"
+										listener="#{reservasBean.onRowSelectCliente}"
+										oncomplete="PF('clientePicker').hide()" update="@form" />
+
+									<p:column headerText="Id">
+										<p:outputLabel value="#{cliente.id}" />
+									</p:column>
+
+									<p:column headerText="Nome">
+										<p:outputLabel value="#{cliente.nome}" />
+									</p:column>
+
+									<p:column headerText="Cpf">
+										<p:outputLabel value="#{cliente.cpf}" />
+									</p:column>
+
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+
+						<p:outputLabel value="Apartamento " for="apartamento" />
+						<p:column>
+
+							<p:inputText id="apartamento" style="width: 135px" readonly="true"
+								value="#{reservasBean.reserva.apartamento.numQuarto}"
+								required="true" />
+							<p:commandButton for="apartamento" styleClass="ui-width"
+								id="buscarApartamentoBtn" type="button"
+								title="Buscar Apartamento" icon="pi pi-search" />
+							<p:overlayPanel for="buscarApartamentoBtn"
+								style="width: 350px" widgetVar="apartamentoPicker">
+
+								<p:dataTable id="dtApartamento" var="apartamento"
+									value="#{apartamentoBean.listaApartamentos}"
+									selection="#{reservasBean.apartamentoSelecionado}"
+									selectionMode="single" paginator="botton"
+									rowKey="#{apartamento.id}"
+									style="text-align: center">
+
+									<p:ajax event="rowSelect"
+										listener="#{reservasBean.onRowSelectApartamento}"
+										oncomplete="PF('apartamentoPicker').hide()" update="@form" />
+
+									<p:column headerText="Quarto"
+										sortBy="#{apartamento.numQuarto}">
+										<p:outputLabel value="#{apartamento.numQuarto}" />
+									</p:column>
+
+									<p:column headerText="Status"
+										sortBy="#{apartamento.statusApartamento}">
+										<p:outputLabel
+											value="#{apartamento.statusApartamento.descricao}" />
+
+									</p:column>
+
+								</p:dataTable>
+							</p:overlayPanel>
+							
+						</p:column>
+
+						<p:outputLabel for="dataInicial" value="Data Inicial" />
+						<p:column>
+							<p:datePicker id="dataInicial" style="width: 170px"
+								value="#{reservasBean.reserva.dataInicial}" showIcon="true"
+								locale="pt_BR" />
+						</p:column>
+						<p:outputLabel for="dataFinal" value="Data Final" />
+						<p:column>
+							<p:datePicker id="dataFinal" style="width: 170px"
+								value="#{reservasBean.reserva.dataFinal}" showIcon="true" />
+						</p:column>
+
+					</p:panelGrid>
+				</div>
+				<div class="botoes">
+					<h:panelGroup>
+
+						<p:commandButton id="reservar" value="Reservar"
+							actionListener="#{reservasBean.reservarQuarto}"
+							update="growl, @form" />
+								&nbsp;
+						<p:commandButton id="limpar" value="Limpar" type="reset"
+							action="#{reservasBean.limpar}" />
+
+					</h:panelGroup>
+				</div>
+
+			</p:fieldset>
+
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

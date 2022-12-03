@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<h:form id="frm" acceptcharset="UTF-8">
+
+			<div class="page-title">
+				<h1>Lista de Apartamentos</h1>
+			</div>
+
+			<p:messages id="msg" closable="true">
+				<p:autoUpdate disabled="false" />
+			</p:messages>
+
+			<p:toolbar id="toolbar" style="padding: 5px;">
+				<p:toolbarGroup>
+					<p:inputText id="pesquisar" placeholder="Digite aqui..."
+						value="#{apartamentoBean.termoPesquisa}" process="@this" />
+
+					<p:commandButton for="pesquisar" value="Pesquisar"
+						icon="pi pi-search" actionListener="#{apartamentoBean.pesquisar}"
+						update="dtApartamentos" process="@this pesquisar" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup>
+					<p:button id="novo" value="Novo" icon="pi pi-plus"
+						action="apartamento?faces-redirect=true" process="@this" />
+
+					<span class="ui-icon ui-icon-grip-dotted-vertical" />
+
+					<p:commandButton id="editar" icon="pi pi-pencil" title="Editar"
+						action="#{apartamentoBean.preparaAlteracao2}" 
+						disabled="#{not apartamentoBean.seApartamentoSelecionado()}">
+						<f:setPropertyActionListener value="#{apartamento}"
+							target="#{apartamentoBean.apartamento}" />
+					</p:commandButton>
+
+					<p:commandButton id="excluir" icon="pi pi-trash" title="Excluir"
+						disabled="#{not apartamentoBean.seApartamentoSelecionado()}" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable id="dtApartamentos"
+				value="#{apartamentoBean.listaApartamentos}" var="apartamento"
+				selectionMode="single" selection="#{apartamentoBean.apartamento}"
+				rowKey="#{apartamento.id}" reflow="true"
+				style="font-size: 1rem; margin-top: 15px; text-align: center"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				emptyMessage="Nenhuma informação a ser exibida.">
+
+				<p:ajax event="rowSelect"
+					listener="#{apartamentoBean.onRowSelectApartamento}"
+					update="frm:toolbar" />
+
+				<p:ajax event="rowUnselect" update="frm:toolbar" />
+
+				<f:facet name="header">
+					<p:outputLabel value="Apartamentos" />
+				</f:facet>
+
+				<p:column headerText="Número Quarto"
+					sortBy="#{apartamento.numQuarto}">
+					<p:outputLabel value="#{apartamento.numQuarto}" />
+				</p:column>
+				<p:column headerText="Qtd ocupantes"
+					sortBy="#{apartamento.qtdOcupantes}">
+					<p:outputLabel value="#{apartamento.qtdOcupantes}" />
+				</p:column>
+
+				<!-- 	<p:column style="width: 100px" headerText="Status"
+							sortBy="#{apartamento.statusApartamento}">
+							<p:outputLabel value="#{apartamento.statusApartamento.descricao}" />
+						</p:column>  -->
+
+				<p:column exportable="false">
+					<p:commandButton style="font-size: 1rem" icon="pi pi-pencil"
+						action="#{apartamentoBean.preparaAlteracao}">
+						<f:setPropertyActionListener value="#{apartamento}"
+							target="#{apartamentoBean.apartamento}" />
+					</p:commandButton>
+
+					<p:commandButton style="font-size: 1rem" icon="pi pi-trash"
+						action="#{apartamentoBean.remover}">
+						<f:setPropertyActionListener value="#{apartamento}"
+							target="#{apartamentoBean.apartamento}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>

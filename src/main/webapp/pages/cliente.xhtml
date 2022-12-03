@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="/WEB-INF/template/layout.xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<div class="page-title">
+			<h1>Cadastro de Cliente</h1>
+		</div>
+
+		<h:form acceptcharset="UTF-8">
+
+			<p:toolbar style="padding: 5px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="cliente" icon="pi pi-plus"/>
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" icon="pi pi-search" outcome="lista-clientes?faces-redirect=true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:messages id="msg" showDetail="false" closable="true" />
+
+			<div class="ui-fluid">
+				<p:tabView style="margin-top: 15px">
+
+					<p:tab title="Dados básicos">
+
+						<p:inputText id="idCliente" type="hidden"
+							value="#{clienteBean.cliente.id}" />
+
+						<p:panelGrid columns="4" styleClass="noBorder" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+							<p:outputLabel for="nome" value="Nome" />
+							<p:inputText id="nome" label="Nome" required="true"
+								value="#{clienteBean.cliente.nome}" />
+
+							<p:outputLabel for="cpf" value="CPF" />
+							<p:inputMask id="cpf" mask="999.999.999-99" required="true"
+								value="#{clienteBean.cliente.cpf}" />
+
+							<p:outputLabel for="telefone" value="Telefone" />
+							<p:inputMask id="telefone" mask="(99) 99999-9999"
+								value="#{clienteBean.cliente.telefone}" />
+
+							<p:outputLabel for="celular" value="Celular" />
+							<p:inputMask id="celular" mask="(99) 99999-9999"
+								value="#{clienteBean.cliente.celular}" />
+
+							<p:outputLabel for="email" value="Email" />
+							<p:inputText id="email" required="true"
+								value="#{clienteBean.cliente.email}"
+								 />
+
+							<p:outputLabel for="dataNascimento" value="Data Nascimento" />
+							<p:inputMask id="dataNascimento" mask="99/99/9999"
+								value="#{clienteBean.cliente.dataNascimento}">
+								<f:convertDateTime for="dataNascimento" type="date"
+									pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-3" />
+							</p:inputMask>
+
+							<p:outputLabel for="sexo" value="Sexo">
+								<p:selectOneMenu id="sexo" value="#{clienteBean.cliente.sexo}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItem itemValue="M" itemLabel="Masculino" />
+									<f:selectItem itemValue="F" itemLabel="Feminino" />
+								</p:selectOneMenu>
+							</p:outputLabel>
+
+						</p:panelGrid>
+					</p:tab>
+					<!-- FIM TAB CLIENTE -->
+
+					<p:tab title="Endereço">
+
+						<p:panelGrid columns="4" styleClass="noBorder" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+							<p:outputLabel for="cep" value="CEP" />
+							<p:inputText id="cep" value="#{clienteBean.cliente.endereco.cep}">
+								<f:ajax event="blur" execute="@this"
+									listener="#{clienteBean.pesquisaCep}"
+									render="logradouro complemento municipio bairro estado" />
+							</p:inputText>
+
+							<p:outputLabel for="logradouro" value="Logradouro" />
+							<p:inputText id="logradouro"
+								value="#{clienteBean.cliente.endereco.logradouro}" />
+
+							<p:outputLabel for="numero" value="Número" />
+							<p:inputText id="numero"
+								value="#{clienteBean.cliente.endereco.numero}" />
+
+							<p:outputLabel for="complemento" value="Complemento" />
+							<p:inputText id="complemento"
+								value="#{clienteBean.cliente.endereco.complemento}" />
+
+							<p:outputLabel for="municipio" value="Município" />
+							<p:inputText id="municipio"
+								value="#{clienteBean.cliente.endereco.municipio}" />
+
+							<p:outputLabel for="bairro" value="Bairro" />
+							<p:inputText id="bairro"
+								value="#{clienteBean.cliente.endereco.bairro}" />
+
+							<p:outputLabel for="estado" value="Estado" />
+							<p:inputText id="estado"
+								value="#{clienteBean.cliente.endereco.uf}" />
+
+						</p:panelGrid>
+					</p:tab>
+					<!-- FIM TAB ENDEREÇO -->
+
+					<p:tab title="Observações">
+
+						<p:inputTextarea />
+
+					</p:tab>
+				</p:tabView>
+
+				<div class="ui-buttons">
+					<h:panelGroup>
+
+						<p:commandButton value="Salvar"
+							actionListener="#{clienteBean.salvar}" update="@form"
+							style="width: auto" />
+						<p:commandButton value="Limpar" action="#{clienteBean.limpar}"
+							immediate="true" style="width: auto" />
+
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

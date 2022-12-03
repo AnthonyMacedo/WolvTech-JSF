@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>WolvTech</title>
+	<f:facet name="first">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+	<h:outputStylesheet library="css" name="layout.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+		
+	<h:outputScript target="body" library="javascript" name="menu_toogle.js"></h:outputScript>
+</h:head>
+
+<h:body>
+
+	<div class="container">
+
+		<header class="header">
+
+			<div class="logo">
+				<p:graphicImage library="img" name="logo.png" alt="BlueHawk Logo"/>
+			</div>
+
+			<div class="icon-menu js-icon-menu">
+				<a href="#"><i class="pi pi-bars"></i></a>
+			</div>
+
+		</header>
+		<!-- Fim header -->
+		
+		<aside class="sidebar js-sidebar">
+			<ui:include src="menu.xhtml" />
+		</aside>
+		<!-- Fim menu -->
+
+		<section class="content js-content">
+			<ui:insert name="content"></ui:insert>
+		</section>
+		<!-- Fim content -->
+
+		<div class="footer"></div>
+		<!-- Fim footer -->
+
+	</div>
+	<!-- Fim container -->
+	<script src="https://kit.fontawesome.com/c97b477b33.js" crossorigin="anonymous"></script>
+</h:body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<h:form acceptcharset="UTF-8">
+
+			<div class="page-title">
+				<h1>Cadastro de apartamento</h1>
+			</div>
+
+			<p:toolbar style="padding: 5px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="cliente" icon="pi pi-plus" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button value="Listar Apartamentos" outcome="lista-apartamentos"
+						icon="pi pi-search" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:messages id="msg" closable="true" showDetail="false" />
+
+			<p:inputText id="idHidden" type="hidden"
+				value="#{apartamentoBean.apartamento.id}" />
+
+			<p:tabView style="margin-top: 15px">
+				<p:tab title="Apartamento">
+					<p:panelGrid columns="2" styleClass="noBorder" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-4">
+
+						<p:outputLabel for="apartamento" value="Número do quarto:" />
+						<p:inputNumber id="apartamento"
+							value="#{apartamentoBean.apartamento.numQuarto}" minValue="0"
+							maxValue="80" decimalPlaces="0" required="true" />
+
+						<p:outputLabel for="qtdOcupantes" value="Quantidade ocupantes:" />
+						<p:inputText id="qtdOcupantes"
+							value="#{apartamentoBean.apartamento.qtdOcupantes}" minValue="0"
+							maxValue="6" decimalPlaces="0" required="true" />
+
+						<p:outputLabel for="enumStatus" value="Status:" />
+						<p:selectOneMenu id="enumStatus" required="true"
+							value="#{apartamentoBean.apartamento.statusApartamento}"
+							style="width: 185px">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{apartamentoBean.statusApartamento}"
+								var="enumStatus" itemLabel="#{enumStatus.descricao}"
+								itemValue="#{enumStatus}" />
+						</p:selectOneMenu>
+
+
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+
+			<div class="ui-buttons">
+				<h:panelGroup>
+
+					<p:commandButton value="Salvar" action="#{apartamentoBean.salvar}"
+						update="@form" styleClass="mr-2"
+						oncomplete="setTimeout(function() { $('#msgs').hide(1000); }, 3000);" />
+
+					<p:commandButton value="Limpar" type="reset"
+						action="#{apartamentoBean.limpar}" update="@form" immediate="true" />
+
+				</h:panelGroup>
+			</div>
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

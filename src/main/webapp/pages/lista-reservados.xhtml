@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h:head></h:head>
+
+		<div class="page-title">
+			<h1>Lista de Apartamentos</h1>
+		</div>
+
+		<h:form acceptcharset="UTF-8">
+
+			<p:toolbar style="padding: 5px;">
+				<p:toolbarGroup>
+					<p:inputText id="pesquisar" placeholder="Digite aqui..." />
+					
+					<p:commandButton for="pesquisar" value="Pesquisar"
+						icon="pi pi-search" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup>
+					<p:commandButton id="novo" value="Novo" icon="pi pi-plus" />
+
+					<span class="ui-icon ui-icon-grip-dotted-vertical" />
+
+					<p:commandButton id="editar" icon="pi pi-pencil"
+						title="Editar" />
+
+					<p:commandButton id="excluir" icon="pi pi-trash"
+						title="Excluir" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable id="dtApartamentosReservados"
+				widgetVar="dtApartamentosReservados" var="apartamentosReservados"
+				value="#{reservasBean.listaReservas}" reflow="true"
+				styleClass="products-table" rowKey="#{apartamentosReservados.id}"
+				paginator="true" rows="10"
+				style="font-size: 1rem; margin-top: 15px"
+				paginatorPosition="bottom">
+
+				<f:facet name="header">
+					<p:outputLabel value="Apartamentos Reservados" />
+				</f:facet>
+
+				<p:column headerText="Id" style="width: 50px">
+					<p:outputLabel value="#{apartamentosReservados.id}" />
+				</p:column>
+
+				<p:column headerText="Cliente">
+					<p:outputLabel value="#{apartamentosReservados.cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="Apartamento">
+					<p:outputLabel
+						value="#{apartamentosReservados.apartamento.numQuarto}" />
+				</p:column>
+
+				<p:column headerText="Status Apartamento">
+					<p:outputLabel
+						value="#{apartamentosReservados.apartamento.statusApartamento.descricao}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>
