@@ -18,13 +18,15 @@
 
 		<h:form acceptcharset="UTF-8">
 
+
 			<p:toolbar style="padding: 5px">
 				<p:toolbarGroup>
-					<p:button value="Novo" outcome="cliente" icon="pi pi-plus"/>
+					<p:button value="Novo" outcome="cliente" icon="pi pi-plus" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
-					<p:button value="Pesquisa" icon="pi pi-search" outcome="lista-clientes?faces-redirect=true" />
+					<p:button value="Pesquisa" icon="pi pi-search"
+						outcome="lista-clientes?faces-redirect=true" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -34,16 +36,19 @@
 				<p:tabView style="margin-top: 15px">
 
 					<p:tab title="Dados básicos">
-
+					
+						<p:focus context="panel" for="nome" />
+						
 						<p:inputText id="idCliente" type="hidden"
 							value="#{clienteBean.cliente.id}" />
 
-						<p:panelGrid columns="4" styleClass="noBorder" layout="grid"
+						<p:panelGrid id="panel" columns="4" styleClass="noBorder"
+							layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 
 							<p:outputLabel for="nome" value="Nome" />
 							<p:inputText id="nome" label="Nome" required="true"
-								value="#{clienteBean.cliente.nome}" />
+								value="#{clienteBean.cliente.nome}" onfocus="true" />
 
 							<p:outputLabel for="cpf" value="CPF" />
 							<p:inputMask id="cpf" mask="999.999.999-99" required="true"
@@ -59,8 +64,7 @@
 
 							<p:outputLabel for="email" value="Email" />
 							<p:inputText id="email" required="true"
-								value="#{clienteBean.cliente.email}"
-								 />
+								value="#{clienteBean.cliente.email}" />
 
 							<p:outputLabel for="dataNascimento" value="Data Nascimento" />
 							<p:inputMask id="dataNascimento" mask="99/99/9999"
@@ -88,7 +92,7 @@
 
 							<p:outputLabel for="cep" value="CEP" />
 							<p:inputText id="cep" value="#{clienteBean.cliente.endereco.cep}">
-								<f:ajax event="blur" execute="@this"
+								<f:ajax event="blur" execute=":form"
 									listener="#{clienteBean.pesquisaCep}"
 									render="logradouro complemento municipio bairro estado" />
 							</p:inputText>

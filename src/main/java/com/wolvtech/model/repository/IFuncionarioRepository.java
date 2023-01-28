@@ -4,6 +4,8 @@ import com.wolvtech.model.entity.Funcionario;
 
 public interface IFuncionarioRepository extends IRepository<Funcionario, Long> {
 	
+	Funcionario consultarUsuario(String usuario);
+	
 	Funcionario consultarUsuario(String usuario, String senha);
 	
 }

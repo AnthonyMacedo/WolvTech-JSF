@@ -19,7 +19,8 @@ import com.google.gson.Gson;
 import com.wolvtech.model.entity.Endereco;
 import com.wolvtech.model.entity.Funcionario;
 import com.wolvtech.model.repository.IFuncionarioRepository;
-import com.wolvtech.util.annotations.TransactionJpa;
+import com.wolvtech.security.encripty.CriptografarSenha;
+import com.wolvtech.utils.annotations.TransactionJpa;
 
 @TransactionJpa
 @ViewScoped
@@ -41,7 +42,8 @@ public class FuncionarioBean implements Serializable {
 	public String salvar() {
 
 		try {
-			
+			funcionario.setSenha(CriptografarSenha.md5(funcionario.getSenha()));
+			System.out.println(funcionario.getSenha());
 			funcionarioDao.gravar(funcionario);
 			funcionario = new Funcionario();
 			this.listaFuncionarios = null;

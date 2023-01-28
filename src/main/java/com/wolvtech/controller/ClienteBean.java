@@ -17,12 +17,11 @@ import com.google.gson.Gson;
 import com.wolvtech.model.entity.Cliente;
 import com.wolvtech.model.entity.Endereco;
 import com.wolvtech.model.repository.IClienteRepository;
-import com.wolvtech.util.annotations.TransactionJpa;
-import com.wolvtech.util.messages.FacesMessages;
+import com.wolvtech.utils.annotations.TransactionJpa;
+import com.wolvtech.utils.messages.FacesMessages;
 
 import org.primefaces.event.SelectEvent;
 
-@TransactionJpa
 @RequestScoped
 @Named(value = "clienteBean")
 public class ClienteBean implements Serializable {
@@ -41,30 +40,22 @@ public class ClienteBean implements Serializable {
 
 	@Inject
 	transient private IClienteRepository iClienteDao;
-	
+
 	private String termoPesquisa;
 
+	@TransactionJpa
 	public void salvar() {
 
 		try {
-
-			if (verificaCadastroCliente() != null && verificaCadastroCliente().getId().equals(cliente.getId())) {
-
 				iClienteDao.gravar(cliente);
-				this.listaClientes = null;
-				msg.info("Cadastro alterado.");
 				cliente = new Cliente();
-
-			} else if (verificaCadastroCliente() == null && cliente.getId() == null) {
-
-				iClienteDao.gravar(cliente);
 				this.listaClientes = null;
-				msg.info("Cliente cadastrado");
-				cliente = new Cliente();
+				msg.info("Cliente salvo com sucesso.");
 
-			}
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.getMessage();
+			System.out.println(e);
+
 			msg.error("Falha no cadastrado.");
 		}
 	}
@@ -74,6 +65,7 @@ public class ClienteBean implements Serializable {
 		return "/pages/cliente.xhtml?faces-redirect=true";
 	}
 
+	@TransactionJpa
 	public String remove() {
 		try {
 			iClienteDao.remover(Cliente.class, cliente.getId());
@@ -88,11 +80,13 @@ public class ClienteBean implements Serializable {
 
 	}
 
+	@TransactionJpa
 	public String preparaAlteracao() {
 		this.cliente = iClienteDao.buscarPorId(Cliente.class, cliente.getId());
 		return "/pages/cliente.xhtml";
 	}
 
+	@TransactionJpa
 	public List<Cliente> getListaClientes() {
 		if (this.listaClientes == null) {
 			this.listaClientes = iClienteDao.buscarTodos(Cliente.class);
@@ -102,22 +96,9 @@ public class ClienteBean implements Serializable {
 
 	public void pesquisar() {
 		listaClientes = iClienteDao.pesquisar(termoPesquisa);
-		
-		if(listaClientes.isEmpty()) {
+
+		if (listaClientes.isEmpty()) {
 			msg.info("Nenhum registro encontrado.");
-		}
-	}
-
-	public Cliente verificaCadastroCliente() {
-
-		Cliente buscarCliente = null;
-
-		buscarCliente = iClienteDao.verificaCadastroCliente(cliente.getId());
-
-		if (buscarCliente != null) {
-			return buscarCliente;
-		} else {
-			return null;
 		}
 	}
 
@@ -200,5 +181,5 @@ public class ClienteBean implements Serializable {
 	public void setTermoPesquisa(String termoPesquisa) {
 		this.termoPesquisa = termoPesquisa;
 	}
-	
+
 }

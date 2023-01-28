@@ -156,6 +156,7 @@ body {
     color: #fff;
     border-radius: 3px;
     text-shadow: none;
+    padding: 10px;
 }
 .ui-button.noBorder{
 	border: none;

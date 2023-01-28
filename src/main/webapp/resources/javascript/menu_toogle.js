@@ -64,17 +64,4 @@ subMenuListas.addEventListener('click', function() {
 
 })
 
-/* link ativo */
-var navLink = document.querySelectorAll('.nav-link');
-
-navLink.forEach(function(currentValue, index, array) {
-	currentValue.addEventListener('click', function() {
-
-		navLink.forEach(function(element) {
-			element.classList.remove('js-isActive');
-		});
-		currentValue.classList.add('js-isActive');
-	});
-});
-
 

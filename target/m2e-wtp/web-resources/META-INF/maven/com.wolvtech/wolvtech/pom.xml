@@ -38,7 +38,7 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- HIBERNATE PERSISTENCIA-->
 		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
 		<dependency>
@@ -63,13 +63,13 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- DRIVER MYSQL -->
+		<!-- DRIVER POSTEGRE -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.31</version>
-			<scope>compile</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.5.1</version>
 		</dependency>
+
 
 		<!-- CDI -->
 		<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
@@ -80,12 +80,34 @@
 			<scope>compile</scope>
 		</dependency>
 
+
 		<!-- GSON -->
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.10</version>
+		</dependency>
+
+		<!-- Log4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+
+		<!-- JasperReports-->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>3.3.0</version>
 		</dependency>
 
 	</dependencies>

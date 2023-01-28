@@ -16,7 +16,8 @@ import com.wolvtech.model.entity.Apartamento;
 import com.wolvtech.model.entity.Cliente;
 import com.wolvtech.model.entity.Reservas;
 import com.wolvtech.model.repository.IReservasRepository;
-import com.wolvtech.util.annotations.TransactionJpa;
+import com.wolvtech.utils.annotations.TransactionJpa;
+import com.wolvtech.utils.messages.FacesMessages;
 
 import org.primefaces.event.SelectEvent;
 
@@ -31,12 +32,16 @@ public class ReservasBean implements Serializable {
 
 	private Cliente clienteSelecionado;
 
+	@Inject
 	private Apartamento apartamentoSelecionado;
 
 	private List<Reservas> listaReservas;
 
 	@Inject
 	transient private IReservasRepository reservasDao;
+	
+	@Inject
+	private FacesMessages msg;
 
 	public ReservasBean() {
 	}
@@ -48,7 +53,7 @@ public class ReservasBean implements Serializable {
 			reservasDao.gravar(reserva);
 			reserva = new Reservas();
 			new Cliente();
-			msg("Apartamento reservado.");
+			msg.info("Apartamento reservado.");
 
 			return "/pages/reservas.xhtml?faces-redirect=true";
 		} else {
@@ -97,13 +102,13 @@ public class ReservasBean implements Serializable {
 			int aux2 = dtFinal.compareTo(dtAtual);
 			
 			if( aux < 0 ) {
-				msg("Data inicial não pode ser anterior a data atual.");
+				msg.warning("Data inicial não pode ser anterior a data atual.");
 			}
 			if (aux2 < 0) {
-				msg("Data final não pode ser anterior a data atual.");
+				msg.warning("Data final não pode ser anterior a data atual.");
 			}
 			if (aux2 == 0) {
-				msg("Data final deve ser superior a data atual.");
+				msg.warning("Data final deve ser superior a data atual.");
 			}
 			
 			return false;

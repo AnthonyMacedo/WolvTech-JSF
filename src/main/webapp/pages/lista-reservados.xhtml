@@ -14,7 +14,7 @@
 		<h:head></h:head>
 
 		<div class="page-title">
-			<h1>Lista de Apartamentos</h1>
+			<h1>Apartamentos Reservados</h1>
 		</div>
 
 		<h:form acceptcharset="UTF-8">
@@ -45,7 +45,7 @@
 				value="#{reservasBean.listaReservas}" reflow="true"
 				styleClass="products-table" rowKey="#{apartamentosReservados.id}"
 				paginator="true" rows="10"
-				style="font-size: 1rem; margin-top: 15px"
+				style="font-size: 1rem; margin-top: 15px; text-align: center"
 				paginatorPosition="bottom">
 
 				<f:facet name="header">
@@ -60,14 +60,9 @@
 					<p:outputLabel value="#{apartamentosReservados.cliente.nome}" />
 				</p:column>
 
-				<p:column headerText="Apartamento">
+				<p:column headerText="Quarto">
 					<p:outputLabel
 						value="#{apartamentosReservados.apartamento.numQuarto}" />
-				</p:column>
-
-				<p:column headerText="Status Apartamento">
-					<p:outputLabel
-						value="#{apartamentosReservados.apartamento.statusApartamento.descricao}" />
 				</p:column>
 
 			</p:dataTable>

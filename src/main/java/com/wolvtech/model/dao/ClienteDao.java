@@ -19,25 +19,26 @@ public class ClienteDao extends DaoGeneric<Cliente, Long> implements IClienteRep
 
 	public ClienteDao() {
 	}
-
+	
 	@Override
-	public Cliente verificaCadastroCliente(Long id) {
+	public Cliente verificaCadastroCliente(String cpf) {
 
-		Cliente buscarCliente = null;
+		Cliente cliente = null;
 
 		try {
 
-			buscarCliente = (Cliente) em.createQuery("select c from Cliente c where c.id = '" + id + "'")
+			cliente = (Cliente) em.createQuery("select c from Cliente c where c.cpf = '" + cpf + "'")
 					.getSingleResult();
-
-			return buscarCliente;
-
+			
+			if(cliente != null) {
+				return cliente;
+			}
+			
 		} catch (jakarta.persistence.NoResultException e) {
-			System.out.println("ID CLIENTE NAO LOCALIZADO.");
-			e.printStackTrace();
+			System.out.println("CPF NÃO LOCALIZADO/CADASTRADO.");
+			e.getMessage();
 		}
 		return null;
-
 	}
 	
 	@Override

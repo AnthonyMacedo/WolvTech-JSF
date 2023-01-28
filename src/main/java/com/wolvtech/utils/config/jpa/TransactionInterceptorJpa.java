@@ -1,4 +1,4 @@
-package com.wolvtech.util.config.jpa;
+package com.wolvtech.utils.config.jpa;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import com.wolvtech.util.annotations.TransactionJpa;
+import com.wolvtech.utils.annotations.TransactionJpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;

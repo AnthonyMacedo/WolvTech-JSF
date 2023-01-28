@@ -34,7 +34,7 @@
 
 				<p:toolbarGroup>
 					<p:button id="novo" value="Novo" icon="pi pi-plus"
-						action="apartamento?faces-redirect=true" process="@this" />
+						outcome="apartamento" process="@this" />
 
 					<span class="ui-icon ui-icon-grip-dotted-vertical" />
 
@@ -44,9 +44,6 @@
 						<f:setPropertyActionListener value="#{apartamento}"
 							target="#{apartamentoBean.apartamento}" />
 					</p:commandButton>
-
-					<p:commandButton id="excluir" icon="pi pi-trash" title="Excluir"
-						disabled="#{not apartamentoBean.seApartamentoSelecionado()}" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -67,7 +64,12 @@
 				<f:facet name="header">
 					<p:outputLabel value="Apartamentos" />
 				</f:facet>
-
+				
+				<p:column headerText="Id"
+					sortBy="#{apartamento.id}">
+					<p:outputLabel value="#{apartamento.id}" />
+				</p:column>
+				
 				<p:column headerText="Número Quarto"
 					sortBy="#{apartamento.numQuarto}">
 					<p:outputLabel value="#{apartamento.numQuarto}" />
@@ -75,6 +77,10 @@
 				<p:column headerText="Qtd ocupantes"
 					sortBy="#{apartamento.qtdOcupantes}">
 					<p:outputLabel value="#{apartamento.qtdOcupantes}" />
+				</p:column>
+				<p:column headerText="Status"
+					sortBy="#{apartamento.statusApartamento}">
+					<p:outputLabel value="#{apartamento.statusApartamento.descricao}"/>
 				</p:column>
 
 				<!-- 	<p:column style="width: 100px" headerText="Status"
@@ -91,9 +97,20 @@
 
 					<p:commandButton style="font-size: 1rem" icon="pi pi-trash"
 						action="#{apartamentoBean.remover}">
+						<f:ajax event="click" update=":form:growl" />
 						<f:setPropertyActionListener value="#{apartamento}"
 							target="#{apartamentoBean.apartamento}" />
+							<p:confirm header="Confirmação"
+								message="Deseja excluir este registro?" icon="pi pi-info-circle" />
 					</p:commandButton>
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							responsive="true" width="350">
+							<p:commandButton value="Não" type="button"
+								styleClass="ui-confirmdialog-no ui-button-flat" />
+							<p:commandButton value="Sim" type="button"
+								styleClass="ui-confirmdialog-yes" />
+						</p:confirmDialog>
 				</p:column>
 			</p:dataTable>
 		</h:form>

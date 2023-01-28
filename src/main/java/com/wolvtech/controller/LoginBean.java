@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.wolvtech.model.entity.Funcionario;
 import com.wolvtech.model.repository.IFuncionarioRepository;
-import com.wolvtech.util.annotations.TransactionJpa;
+import com.wolvtech.security.encripty.CriptografarSenha;
+import com.wolvtech.utils.annotations.TransactionJpa;
 
-@TransactionJpa
+
 @SessionScoped
 @Named(value = "loginBean")
 public class LoginBean implements Serializable {
@@ -24,34 +25,35 @@ public class LoginBean implements Serializable {
 	private String usuario;
 
 	private String senha;
-	
+
 	private Date data;
 
 	private String nomeFuncionario;
-
+	
 	@Inject
 	transient private IFuncionarioRepository funcionarioDao;
 
 	public LoginBean() {
 		data = new Date();
 	}
-
+	
+	@TransactionJpa
 	public void autentica() {
 
 		try {
-			Funcionario funcionarioUser = funcionarioDao.consultarUsuario(usuario, senha);
-
+			Funcionario funcionarioUser = funcionarioDao.consultarUsuario(usuario, senhaCriptografada());
+			
 			if (funcionarioUser != null && usuario.contentEquals(funcionarioUser.getUsuario())
-					&& senha.contentEquals(funcionarioUser.getSenha())) {
+					&& senhaCriptografada().contentEquals(funcionarioUser.getSenha())) {
 
 				nomeFuncionario = funcionarioUser.getNome();
-				
+
 				// adicionar o usuário na sessão usuarioLogado
 				FacesContext context = FacesContext.getCurrentInstance();
 				ExternalContext externalContext = context.getExternalContext();
 				externalContext.getSessionMap().put("usuarioLogado", funcionarioUser.getUsuario());
-				
-				externalContext.redirect("/reservja/index.xhtml");
+
+				externalContext.redirect("/wolvtech/index.xhtml");
 
 			} else {
 				usuario = null;
@@ -59,7 +61,7 @@ public class LoginBean implements Serializable {
 				msg("Usuário ou senha inválidos.");
 			}
 
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			e.getMessage();
 			System.out.println(e);
 		}
@@ -83,12 +85,17 @@ public class LoginBean implements Serializable {
 		httpServletRequest.getSession().invalidate();
 		nomeFuncionario = null;
 		usuario = null;
-		senha = null;		
+		senha = null;
 		return "/login.xhtml?faces-redirect=true";
 	}
 
+	public String senhaCriptografada() {
+		return CriptografarSenha.md5(senha);
+	}
+	
 	public void msg(String mensagem) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, "Erro no login."));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, "Erro no login."));
 	}
 
 	public String getUsuario() {
@@ -115,12 +122,12 @@ public class LoginBean implements Serializable {
 		this.nomeFuncionario = nomeFuncionario;
 	}
 
-	public Date getData() {	
+	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
+
 }

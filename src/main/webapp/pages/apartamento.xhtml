@@ -12,7 +12,7 @@
 
 	<ui:define name="content">
 
-		<h:form acceptcharset="UTF-8">
+		<h:form id="frm" acceptcharset="UTF-8">
 
 			<div class="page-title">
 				<h1>Cadastro de apartamento</h1>
@@ -20,7 +20,7 @@
 
 			<p:toolbar style="padding: 5px">
 				<p:toolbarGroup>
-					<p:button value="Novo" outcome="cliente" icon="pi pi-plus" />
+					<p:button value="Novo" outcome="apartamento" icon="pi pi-plus" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
@@ -35,21 +35,25 @@
 				value="#{apartamentoBean.apartamento.id}" />
 
 			<p:tabView style="margin-top: 15px">
+
 				<p:tab title="Apartamento">
+
+					<p:focus for="numQuarto" />
+
 					<p:panelGrid columns="2" styleClass="noBorder" layout="grid"
 						columnClasses="ui-grid-col-2, ui-grid-col-4">
 
-						<p:outputLabel for="apartamento" value="Número do quarto:" />
-						<p:inputNumber id="apartamento"
-							value="#{apartamentoBean.apartamento.numQuarto}" minValue="0"
-							maxValue="80" decimalPlaces="0" required="true" />
+						<p:outputLabel for="numQuarto" value="Número do quarto" />
+						<p:inputText id="numQuarto"
+							value="#{apartamentoBean.apartamento.numQuarto}" maxlength="5"
+							required="true" />
 
-						<p:outputLabel for="qtdOcupantes" value="Quantidade ocupantes:" />
-						<p:inputText id="qtdOcupantes"
-							value="#{apartamentoBean.apartamento.qtdOcupantes}" minValue="0"
-							maxValue="6" decimalPlaces="0" required="true" />
+						<p:outputLabel for="qtdOcupantes" value="Ocupantes total" />
+						<p:inputNumber id="qtdOcupantes"
+							value="#{apartamentoBean.apartamento.qtdOcupantes}" minValue="1"
+							maxValue="4" maxlength="1"  required="true" />
 
-						<p:outputLabel for="enumStatus" value="Status:" />
+						<p:outputLabel for="enumStatus" value="Status" />
 						<p:selectOneMenu id="enumStatus" required="true"
 							value="#{apartamentoBean.apartamento.statusApartamento}"
 							style="width: 185px">
@@ -68,11 +72,11 @@
 				<h:panelGroup>
 
 					<p:commandButton value="Salvar" action="#{apartamentoBean.salvar}"
-						update="@form" styleClass="mr-2"
+						update=":frm:" styleClass="mr-2"
 						oncomplete="setTimeout(function() { $('#msgs').hide(1000); }, 3000);" />
 
-					<p:commandButton value="Limpar" type="reset"
-						action="#{apartamentoBean.limpar}" update="@form" immediate="true" />
+					<p:commandButton value="Limpar" action="#{apartamentoBean.preparaNovoApartamento()}"
+						immediate="true" />
 
 				</h:panelGroup>
 			</div>

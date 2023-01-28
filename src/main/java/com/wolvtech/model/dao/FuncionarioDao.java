@@ -18,6 +18,22 @@ public class FuncionarioDao extends DaoGeneric<Funcionario, Long> implements IFu
 	}
 
 	@Override
+	public Funcionario consultarUsuario(String usuario) {
+		Funcionario funcionario = null;
+
+		try {
+
+			funcionario = (Funcionario) em.createQuery(
+					"select f from Funcionario f where f.usuario = '" + usuario + "'")
+					.getSingleResult();
+
+		} catch (jakarta.persistence.NoResultException e) {
+			System.out.println(e + " / Usuário inexistente. - FUNCIONARIO");
+		}
+		return funcionario;
+	}
+
+	@Override
 	public Funcionario consultarUsuario(String usuario, String senha) {
 
 		Funcionario funcionario = null;

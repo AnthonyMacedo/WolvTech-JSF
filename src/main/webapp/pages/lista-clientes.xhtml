@@ -18,9 +18,7 @@
 				<h1>Lista de Clientes</h1>
 			</div>
 
-			<p:messages > 
-				<p:autoUpdate disabled="false" />
-			</p:messages>
+			<p:messages id="msg" showDetail="false" closable="true" />
 
 			<h:form acceptcharset="UTF-8" style=" text-align: center;">
 
@@ -35,7 +33,8 @@
 					</p:toolbarGroup>
 
 					<p:toolbarGroup>
-						<p:commandButton id="novo" value="Novo" icon="pi pi-plus" action="cliente?faces-redirect=true" />
+						<p:commandButton id="novo" value="Novo" icon="pi pi-plus"
+							action="cliente?faces-redirect=true" />
 
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 
@@ -45,14 +44,14 @@
 					</p:toolbarGroup>
 				</p:toolbar>
 
-				<p:growl id="growl" showDetail="true" />
+
 
 				<p:dataTable id="dtClientes" widgetVar="dtClientes" var="cliente"
 					value="#{clienteBean.listaClientes}" reflow="true"
 					styleClass="products-table" rowKey="#{cliente.id}" paginator="true"
 					rows="10" style="font-size: 1rem; margin-top: 15px"
 					paginatorPosition="bottom">
-					<p:growl id="growl" showDetail="false" />
+
 
 					<f:facet name="header">
 						<p:outputLabel value="Clientes" />
@@ -91,8 +90,8 @@
 						</p:commandButton>
 
 						<p:commandButton style="font-size: 1rem" icon="pi pi-trash"
-							action="#{clienteBean.remove}" update="@form, growl">
-							<f:ajax event="click" update=":form:growl" />
+							action="#{clienteBean.remove}" update="@form, msg">
+							<f:ajax event="click" update=":form:msg" />
 							<f:setPropertyActionListener value="#{cliente}"
 								target="#{clienteBean.cliente}" />
 							<p:confirm header="Confirmação"

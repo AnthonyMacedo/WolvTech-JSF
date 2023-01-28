@@ -1,4 +1,4 @@
-package com.wolvtech.util.config.jpa;
+package com.wolvtech.utils.config.jpa;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;

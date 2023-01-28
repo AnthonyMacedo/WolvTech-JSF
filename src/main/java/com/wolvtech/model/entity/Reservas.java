@@ -12,12 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "reservas")
 public class Reservas implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,20 +26,20 @@ public class Reservas implements Serializable {
 	
 	@Inject
 	@OneToOne
-	@JoinColumn(name = "cliente_id")
+	@JoinColumn(name = "CLIENTE_ID")
 	private Cliente cliente;
 
 	@Inject
 	@OneToOne
-	@JoinColumn(name = "apartamento_id")
+	@JoinColumn(name = "APARTAMENTO_ID")
 	private Apartamento apartamento;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_inicial")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATA_INICIAL")
 	private Date dataInicial;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_final")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATA_FINAL")
 	private Date dataFinal;
 
 	public Reservas() {

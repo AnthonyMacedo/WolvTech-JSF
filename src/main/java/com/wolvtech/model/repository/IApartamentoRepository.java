@@ -6,6 +6,6 @@ public interface IApartamentoRepository extends IRepository<Apartamento, Long> {
 	
 	public boolean validarQuartoCadastrado(String numQuarto);
 	
-	public Apartamento verificaSeTemId(Long id);
+	public Apartamento verificaSeTemId(String numQuarto);
 	
 }

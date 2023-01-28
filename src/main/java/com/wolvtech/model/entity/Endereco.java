@@ -2,16 +2,13 @@ package com.wolvtech.model.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "endereco")
 public class Endereco implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,28 +17,21 @@ public class Endereco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 10)
 	private String cep;
 
-	@Column(length = 80)
 	private String logradouro;
 
-	@Column(length = 6)
 	private String numero;
 
-	@Column(length = 80)
 	private String complemento;
 
-	@Column(length = 80)
 	private String municipio;
 
 	@Transient
     private String localidade;
 
-	@Column(length = 80)
 	private String bairro;
 
-	@Column(length = 2)
 	private String uf;
 
 	public Endereco() {

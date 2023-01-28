@@ -20,7 +20,7 @@
 						<f:param value="#{loginBean.nomeFuncionario}" />
 					</h:outputFormat>
 					<br />
-					<p:commandLink value="Logout" action="#{loginBean.logout()}" immediate="true" />
+					<p:commandLink value="Logout" style="font-size: 12px" action="#{loginBean.logout()}" immediate="true" />
 			</div>
 			<hr/>
 			<!-- Fim secao-->
@@ -105,15 +105,6 @@
 								</p:link>
 							</li>
 							
-							<li>
-								<p:link class="nav-sub-link" href="#">
-									<i class="pi pi-times-circle">
-										<p:outputLabel> 
-											Cancelar Reserva
-										</p:outputLabel>
-									</i>
-								</p:link>
-							</li>
 							<li>
 								<p:link class="nav-sub-link" outcome="/pages/lista-reservados.xhtml">
 									<i class="pi pi-lock">

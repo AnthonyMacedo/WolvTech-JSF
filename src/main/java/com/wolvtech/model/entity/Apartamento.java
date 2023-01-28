@@ -16,26 +16,27 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "apartamento")
+@Table(name = "APARTAMENTO")
 public class Apartamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long id;
 
 	@NotEmpty
-	@Column(name = "num_quarto", length = 3, unique = true, nullable = false)
+	@Column(name = "NUM_QUARTO")
 	private String numQuarto;
 
 	@NotNull
-	@Column(name = "qtd_ocupantes")
+	@Column(name = "QTD_OCUPANTES")
 	private Integer qtdOcupantes;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status_apartamento", length = 11)
+	@Column(name = "STATUS_APARTAMENTO")
 	private StatusApartamento statusApartamento;
 
 	public Apartamento() {

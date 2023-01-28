@@ -35,27 +35,21 @@ public class ApartamentoDao extends DaoGeneric<Apartamento, Long> implements IAp
 			return true;
 
 		} catch (jakarta.persistence.NoResultException e) {
+			System.out.println(e.getMessage());
 			System.out.println("QUARTO NAO LOCALIZADO.");
 			return false;
 		}
 	}
 
 	@Override
-	public Apartamento verificaSeTemId(Long id) {
+	public Apartamento verificaSeTemId(String numQuarto) {
 
-		Apartamento quartoCadastrado = null;
-
-		try {
-
-			quartoCadastrado = (Apartamento) em.createQuery("select a from Apartamento a where a.id = '" + id + "'")
-					.getSingleResult();
-
+		Apartamento quartoCadastrado = (Apartamento) em
+				.createQuery("select a from Apartamento a where a.numQuarto = '" + numQuarto + "'").getSingleResult();
+		if (quartoCadastrado != null) {
 			return quartoCadastrado;
-
-		} catch (jakarta.persistence.NoResultException e) {
-			System.out.println("ID NAO LOCALIZADO.");
-			return null;
 		}
+		return null;
 	}
 
 	@Override
@@ -69,5 +63,5 @@ public class ApartamentoDao extends DaoGeneric<Apartamento, Long> implements IAp
 
 		return query.getResultList();
 	}
-
+	
 }

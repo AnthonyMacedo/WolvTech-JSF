@@ -49,4 +49,13 @@
 		<param-value>bootstrap</param-value>
 	</context-param>
 
+	<context-param>
+		<param-name>com.sun.faces.numberOfViewsInSession</param-name>
+		<param-value>500</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.sun.faces.numberOfLogicalViews</param-name>
+		<param-value>500</param-value>
+	</context-param>
+
 </web-app>

@@ -16,19 +16,20 @@
 			<h:outputScript library="javascript" name="data_ptbr_script.js"></h:outputScript>
 		</h:head>
 
+		<h:form id="frmReservas">
+		
 		<div class="page-title">
 			<h1>Reservas</h1>
 		</div>
 
-		<h:form>
+			<p:messages id="msg" showDetail="false" closable="true" />
+<p:focus for="cliente" />
 
-			<p:growl id="growl" showDetail="false" />
-
-			<p:fieldset style="border-radius: 10px; border-color: #75a7fb;">
 				<div class="ui-fluid">
 					<p:panelGrid columns="2" styleClass="noBorder"
 						columnClasses="ui-grid-col-2, ui-grid-col-4" layout="grid">
-
+						
+						
 
 						<p:outputLabel value="Cliente " for="cliente" />
 						<p:column>
@@ -51,7 +52,7 @@
 
 									<p:ajax event="rowSelect"
 										listener="#{reservasBean.onRowSelectCliente}"
-										oncomplete="PF('clientePicker').hide()" update="@form" />
+										oncomplete="PF('clientePicker').hide()" update=":frmReservas:cliente" />
 
 									<p:column headerText="Id">
 										<p:outputLabel value="#{cliente.id}" />
@@ -90,7 +91,7 @@
 
 									<p:ajax event="rowSelect"
 										listener="#{reservasBean.onRowSelectApartamento}"
-										oncomplete="PF('apartamentoPicker').hide()" update="@form" />
+										oncomplete="PF('apartamentoPicker').hide()" update=":frmReservas:apartamento" />
 
 									<p:column headerText="Quarto"
 										sortBy="#{apartamento.numQuarto}">
@@ -128,15 +129,13 @@
 
 						<p:commandButton id="reservar" value="Reservar"
 							actionListener="#{reservasBean.reservarQuarto}"
-							update="growl, @form" />
+							update="msg, @form" />
 								&nbsp;
 						<p:commandButton id="limpar" value="Limpar" type="reset"
-							action="#{reservasBean.limpar}" />
+							action="#{reservasBean.limpar}"/>
 
 					</h:panelGroup>
 				</div>
-
-			</p:fieldset>
 
 		</h:form>
 

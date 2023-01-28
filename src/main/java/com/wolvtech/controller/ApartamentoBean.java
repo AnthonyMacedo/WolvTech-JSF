@@ -11,12 +11,13 @@ import javax.inject.Named;
 import com.wolvtech.model.entity.Apartamento;
 import com.wolvtech.model.enums.StatusApartamento;
 import com.wolvtech.model.repository.IApartamentoRepository;
-import com.wolvtech.util.annotations.TransactionJpa;
-import com.wolvtech.util.messages.FacesMessages;
+import com.wolvtech.utils.annotations.TransactionJpa;
+import com.wolvtech.utils.messages.FacesMessages;
 
 import org.primefaces.event.SelectEvent;
 
-@TransactionJpa
+import jakarta.persistence.PersistenceException;
+
 @RequestScoped
 @Named(value = "apartamentoBean")
 public class ApartamentoBean implements Serializable {
@@ -40,34 +41,47 @@ public class ApartamentoBean implements Serializable {
 
 	private String termoPesquisa;
 
-	public void preparaNovoApartamento() {
+	public String preparaNovoApartamento() {
 		apartamento = new Apartamento();
+		return "/pages/apartamento.xhtml?faces-redirect=true";
 	}
 
+
+	@TransactionJpa
 	public void salvar() {
 
 		try {
+			Apartamento apt = validarIdApartamento(apartamento.getNumQuarto());
 
-			if (validarApartamento() == false && apartamento.getId() == null && validarQuartoCadastrado() == false) {
+			if (apartamento.getId() == null && !validarQuartoCadastrado(apartamento.getNumQuarto())) {
+				
 				apartamentoDao.gravar(apartamento);
-				msg.info("Cadastro salvo com sucesso.");
+				msg.info("Apartamento salvo com sucesso.");
 				apartamento = new Apartamento();
-			}
-
-			if (validarApartamento() == true) {
+			} 
+			
+			else if(apt != null && apt.getNumQuarto().contentEquals(apartamento.getNumQuarto()) 
+					&& apt.getId() == apartamento.getId()) {
+				System.out.println("validou apt");
 				apartamentoDao.gravar(apartamento);
-				msg.info("Cadastro alterado.");
+				msg.info("Apartamento alterado com sucesso.");
 				apartamento = new Apartamento();
-			} else {
-				msg.info("Apartamento já existe.");
+			}else {
+				msg.warning("Apartamento já existe.");
 			}
 
 		} catch (jakarta.validation.ConstraintViolationException e) {
-			e.printStackTrace();
+			e.getMessage();
 			msg.error("Falha no cadastro.");
+		} catch (PersistenceException e) {
+			e.getMessage();
+		} catch (NullPointerException e) {
+			e.getMessage();
 		}
+
 	}
 
+	@TransactionJpa
 	public String remover() {
 
 		try {
@@ -77,48 +91,65 @@ public class ApartamentoBean implements Serializable {
 			msg.warning("Apartamento removido.");
 			return "/pages/lista-apartamentos.xhtml?faces-redirect=true";
 		}
-
 	}
 
+	@TransactionJpa
 	public String preparaAlteracao() {
 		this.apartamento = apartamentoDao.buscarPorId(Apartamento.class, apartamento.getId());
 		return "/pages/apartamento";
 	}
+
 	public String preparaAlteracao2() {
 		apartamentoDao.buscarPorId(Apartamento.class, getApartamentoSelecionado().getId());
 		System.out.println("Capturou ID");
 		return "/pages/apartamento?faces-redirect=true&id=" + getApartamentoSelecionado().getId();
 	}
 
-	public void limpar() {
-		apartamento = new Apartamento();
-	}
-
+	@TransactionJpa
 	public void pesquisar() {
 		listaApartamentos = apartamentoDao.pesquisar(termoPesquisa);
 
 		if (listaApartamentos.isEmpty()) {
-			msg.info("Nenhum registro encontrado.");
+			msg.warning("Nenhum registro encontrado.");
 		}
 	}
 
-	public boolean validarApartamento() {
+	@TransactionJpa
+	public Apartamento validarIdApartamento(String numQuarto) {
 
-		if (apartamentoDao.verificaSeTemId(apartamento.getId()) != null) {
-			System.out.println("Achou apartamento");
-			return true;
+		try {
+			Apartamento apartamento = apartamentoDao.verificaSeTemId(numQuarto);
+
+			if (!apartamento.equals(null)) {
+				return apartamento;
+			} else {
+				return null;
+			}
+			
+		} catch (PersistenceException e) {
+			e.getStackTrace();
+			System.out.println("Falha ao localizar apartamento");
 		}
-		System.out.println("Retornou falso apartamento");
-		return false;
+		return null;
 	}
 
-	public boolean validarQuartoCadastrado() {
-		if (apartamentoDao.validarQuartoCadastrado(apartamento.getNumQuarto()) == true) {
-			return true;
-		}
-		return false;
-	}
+	@TransactionJpa
+	public boolean validarQuartoCadastrado(String numQuarto) {
 
+		try {
+
+			boolean aptCadastrado = apartamentoDao.validarQuartoCadastrado(numQuarto);
+
+			if (aptCadastrado == true) {
+				return true;
+			} else
+				return false;
+		} catch (PersistenceException e) {
+			e.getMessage();
+			return false;
+		}
+	}
+	
 	public boolean seApartamentoSelecionado() {
 		return apartamento != null && apartamento.getId() != null;
 	}

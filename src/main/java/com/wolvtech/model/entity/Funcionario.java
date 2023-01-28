@@ -13,12 +13,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "funcionario")
 public class Funcionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,32 +25,25 @@ public class Funcionario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 80)
 	private String nome;
 	
-	@Column(length = 15)
 	private String cpf;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
-	
-	@Column(length = 1)
+
 	private String sexo;
 	
-	@Column(length = 60)
 	private String email;
 	
-	@Column(length = 16)
 	private String telefone;
 	
-	@Column(length = 16)
 	private String celular;
 	
-	@Column(length = 10)
+	@Column(unique = true)
 	private String usuario;
 
-	@Column(length = 10)
 	private String senha;
 	
 	@Inject

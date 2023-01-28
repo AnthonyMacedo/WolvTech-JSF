@@ -6,7 +6,7 @@ http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
 	
 	<interceptors>
 		<class>
-			com.wolvtech.util.config.jpa.TransactionInterceptorJpa
+			com.wolvtech.utils.config.jpa.TransactionInterceptorJpa
 		</class>
 	</interceptors>
 </beans>

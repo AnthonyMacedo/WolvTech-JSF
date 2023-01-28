@@ -1,4 +1,4 @@
-package com.wolvtech.util.messages;
+package com.wolvtech.utils.messages;
 
 import java.io.Serializable;
 
